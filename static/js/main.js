@@ -164,21 +164,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. SplitType & Reveal Animations ---
     const splitElements = document.querySelectorAll('.split-text-reveal');
-    splitElements.forEach(el => {
-        const splitText = new SplitType(el, { types: 'lines, words' });
-        
-        gsap.from(splitText.words, {
-            opacity: 0.15,
-            stagger: 0.015,
-            duration: 1.2,
-            scrollTrigger: {
-                trigger: el,
-                start: 'top 85%',
-                end: 'top 45%',
-                scrub: true,
-                invalidateOnRefresh: true
-            }
+    let splits = [];
+
+    function initSplits() {
+        splits.forEach(s => {
+            try { s.revert(); } catch(e) {}
         });
+        splits = [];
+
+        splitElements.forEach(el => {
+            const splitText = new SplitType(el, { types: 'lines, words' });
+            splits.push(splitText);
+            
+            gsap.fromTo(splitText.words, 
+                { opacity: 0.15 },
+                {
+                    opacity: 1,
+                    stagger: 0.015,
+                    duration: 1.2,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                        end: 'top 45%',
+                        scrub: true,
+                        invalidateOnRefresh: true
+                    }
+                }
+            );
+        });
+    }
+
+    initSplits();
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            initSplits();
+            ScrollTrigger.refresh();
+        }, 250);
     });
 
     // --- 5. Horizontal Projects Scrolling Section ---

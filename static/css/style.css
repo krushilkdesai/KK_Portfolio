@@ -1180,6 +1180,27 @@ header {
     line-height: 1.05;
   }
 
+  .achieve-title {
+    font-size: clamp(1.15rem, 5vw, 1.35rem) !important;
+    word-break: break-word;
+    line-height: 1.25 !important;
+  }
+  
+  .project-showcase-title {
+    font-size: clamp(1.65rem, 6vw, 2.25rem) !important;
+    word-break: break-word;
+  }
+
+  .skills-cat h4 {
+    font-size: 0.85rem !important;
+  }
+
+  .skills-cat p {
+    font-size: 0.8rem !important;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
   /* Prevent long email text from overflowing */
   .contact-method-item .value {
     word-break: break-all !important;
